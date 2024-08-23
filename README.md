@@ -1,2 +1,2 @@
-# Capstnne
+# Capstone
 Meta
