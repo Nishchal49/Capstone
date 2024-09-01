@@ -15,7 +15,7 @@
 
 ### Launch the app
 
-After clning the repository, use the following command to run the app in your localhost.
+After cloning the repository, use the following command to run the app in your localhost.
 
 ```
 npm start
