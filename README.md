@@ -12,17 +12,10 @@
 - Login
   <br />
 
-## How to Start
-
-```shell
-$ git clone https://github.com/Nishchal49/capstone.git
-$ cd capstone
-$ npm install
-```
 
 ### Launch the app
 
-Use the following command to run the app in your localhost.
+After clning the repository, use the following command to run the app in your localhost.
 
 ```
 npm start
