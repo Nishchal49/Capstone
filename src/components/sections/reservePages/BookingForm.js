@@ -11,6 +11,7 @@ export default function ReservationForm(props) {
   const [preferences, setPreferences] = useState("");
   const [comments, setComments] = useState("");
 
+  const [errors, setErrors] = useState({});
   const [finalTime, setFinalTime] = useState(
     props.availableTimes.map((times) => <option>{times}</option>)
   );
@@ -26,6 +27,41 @@ export default function ReservationForm(props) {
     setFinalTime(props.availableTimes.map((times) => <option>{times}</option>));
   }
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!fName || fName.length < 2) {
+      newErrors.fName = "First name must be at least 2 characters long.";
+    }
+    if (!lName || lName.length < 2) {
+      newErrors.lName = "Last name must be at least 2 characters long.";
+    }
+    if (!email || !/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (!tel || !/^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/.test(tel)) {
+      newErrors.tel = "Please enter a valid phone number (e.g., (xxx)-xxx-xxxx).";
+    }
+    if (!date) {
+      newErrors.date = "Please select a date.";
+    }
+    if (!people || people < 1 || people > 100) {
+      newErrors.people = "Please enter a valid number of people (1-100).";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // If validation passes, proceed to the confirmation page
+      // Here you might want to pass the form data to the next step
+      history.push("/confirmation");
+    }
+  };
+
   return (
     <form className="reservation-form">
       <div>
@@ -40,6 +76,7 @@ export default function ReservationForm(props) {
           value={fName}
           onChange={(e) => setFName(e.target.value)}
         ></input>
+        {errors.fName && <span className="error">{errors.fName}</span>}
       </div>
 
       <div>
@@ -53,6 +90,7 @@ export default function ReservationForm(props) {
           value={lName}
           onChange={(e) => setLName(e.target.value)}
         ></input>
+        {errors.lName && <span className="error">{errors.lName}</span>}
       </div>
 
       <div>
@@ -67,6 +105,7 @@ export default function ReservationForm(props) {
           maxLength={200}
           onChange={(e) => setEmail(e.target.value)}
         ></input>
+        {errors.email && <span className="error">{errors.email}</span>}
       </div>
 
       <div>
@@ -81,6 +120,7 @@ export default function ReservationForm(props) {
           maxLength={25}
           onChange={(e) => setTel(e.target.value)}
         ></input>
+        {errors.tel && <span className="error">{errors.tel}</span>}
       </div>
 
       <div>
@@ -95,6 +135,7 @@ export default function ReservationForm(props) {
           max={100}
           onChange={(e) => setPeople(e.target.value)}
         ></input>
+        {errors.people && <span className="error">{errors.people}</span>}
       </div>
 
       <div>
@@ -106,6 +147,7 @@ export default function ReservationForm(props) {
           value={date}
           onChange={handleDateChange}
         ></input>
+        {errors.date && <span className="error">{errors.date}</span>}
       </div>
 
       <div>
